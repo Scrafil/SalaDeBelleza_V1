@@ -19,6 +19,13 @@ class Service extends Model
         'base_price',
         'duration_minutes',
         'is_active',
+        'description', // <-- Añadido
+    ];
+
+    // Asegura que is_active y base_price se manejen correctamente como tipos
+    protected $casts = [
+        'is_active' => 'boolean',
+        'base_price' => 'decimal:2',
     ];
 
     // Un servicio pertenece a una categoría
