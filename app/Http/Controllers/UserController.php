@@ -37,7 +37,7 @@ class UserController extends Controller
             'role_id' => 'required|exists:roles,id',
             'name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'document_type' => 'required|string|max:10',
+            'document_type' => ['required', 'in:CC,TI,PP,CE'],
             'document_number' => 'required|string|max:20|unique:users,document_number',
             'phone_number' => 'nullable|string|max:15',
             'email' => 'required|string|email|max:255|unique:users,email',
@@ -71,7 +71,7 @@ class UserController extends Controller
             'role_id' => 'required|exists:roles,id',
             'name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'document_type' => 'required|string|max:10',
+            'document_type' => ['required', 'in:CC,TI,PP,CE'],
             // unique:users,document_number,ID_A_EXCLUIR
             'document_number' => ['required', 'string', 'max:20', Rule::unique('users', 'document_number')->ignore($user->id)], 
             'phone_number' => 'nullable|string|max:15',

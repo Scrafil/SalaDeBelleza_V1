@@ -1,0 +1,34 @@
+feat: implement dark mode and redesign UI with golden theme
+
+Features:
+- Dark mode toggle with localStorage persistence and sun/moon icons
+- CSS variables system for seamless light/dark theme switching
+- Responsive navbar with all module links and improved mobile UX
+
+UI/UX Improvements:
+- Golden color scheme (#FDB72A, #FF6F61, #FFE3A0) across all views
+- Redesigned all CRUD index views with responsive tables
+- SVG icon buttons (.btn-action) that hide text on mobile (<768px)
+- Dashboard cards with hover effects and currentColor SVGs for dark mode
+- Consistent form styling with .field-label and .card.gilded
+- Improved alerts with dismissible functionality
+
+New Module - Personas:
+- Persona entity with document types (CC, TI, PP, CE)
+- Automatic age calculation from birth_date (server + client side)
+- Full CRUD operations with responsive views
+- Migration and model with proper relationships
+
+Database Changes:
+- Make appointments.client_id and employee_id nullable
+- Set onDelete('set null') for appointment user foreign keys
+
+Files Changed:
+- 14 view files redesigned (roles, users, services, categories, personas)
+- 2 new migrations
+- 1 new model (Persona)
+- 1 new controller (PersonaController)
+- Updated layout with dark mode system
+- Routes updated for new modules
+
+Breaking Changes: None

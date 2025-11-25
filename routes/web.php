@@ -5,11 +5,20 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ServiceCategoryController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\PersonaController;
+use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\ExpenseController;
 
 Route::resource('services', ServiceController::class);
 Route::resource('service-categories', ServiceCategoryController::class);
 Route::resource('roles', RoleController::class);
 Route::resource('users', UserController::class); // Nuevo
+Route::resource('personas', PersonaController::class);
+Route::resource('appointments', AppointmentController::class);
+Route::resource('transactions', TransactionController::class);
+Route::resource('expenses', ExpenseController::class);
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin.dashboard');
 });

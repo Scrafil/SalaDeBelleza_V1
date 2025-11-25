@@ -7,8 +7,40 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+        {{-- Tipografía Harmonis (intento de CDN) --}}
+        <link rel="preconnect" href="https://fonts.cdnfonts.com">
+        <link href="https://fonts.cdnfonts.com/css/harmonis" rel="stylesheet">
+
+        <style>
+            /* Paleta: #FF6F61, #FDB72A, #2E2E2E, #FFE3A0, #CED2D2 */
+            :root{
+                --accent-1: #FF6F61; /* vivid coral */
+                --accent-2: #FDB72A; /* warm gold */
+                --dark-1: #2E2E2E;   /* dark neutral */
+                --gold-soft: #FFE3A0; /* soft gold */
+                --muted: #CED2D2; /* light gray */
+            }
+
+            body { font-family: 'Harmonis', 'Instrument Sans', system-ui, sans-serif; }
+
+            /* Carousel container */
+            .hero-carousel { border-radius: 12px; overflow: hidden; background: linear-gradient(180deg, rgba(253,183,42,0.06), rgba(255,227,160,0.03)); box-shadow: 0 8px 30px rgba(46,46,46,0.06); }
+            .hero-slide img { width:100%; height:420px; object-fit:cover; display:block; }
+            .carousel-overlay { position:absolute; left:0; right:0; top:0; bottom:0; display:flex; align-items:flex-end; padding:28px; }
+            .carousel-caption { background:rgba(255,255,255,0.72); color:var(--dark-1); padding:14px 18px; border-radius:10px; box-shadow:0 6px 18px rgba(46,46,46,0.08); }
+
+            /* Carousel nav small dots */
+            .carousel-dots { display:flex; gap:8px; justify-content:center; margin-top:12px; }
+            .carousel-dots button { width:10px; height:10px; border-radius:50%; background:var(--muted); border:none; }
+            .carousel-dots button.active { background:var(--accent-2); transform:scale(1.25); }
+
+            /* Header brand link highlight */
+            .brand { color:var(--dark-1); font-family: 'Harmonis', system-ui, sans-serif; }
+            header .btn-primary-hero { background: linear-gradient(90deg,var(--accent-2),#e6b32f); border: none; color: white; }
+
+            /* Quiénes somos card */
+            .about-card { background: linear-gradient(180deg,#fff, var(--gold-soft)); padding:2.25rem; border-radius: 12px; color: var(--dark-1); box-shadow: 0 8px 20px rgba(46,46,46,0.06); }
+        </style>
 
         <!-- Styles / Scripts -->
         @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
@@ -20,8 +52,10 @@
         @endif
     </head>
     <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
-        <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
-            @if (Route::has('login'))
+        <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden d-flex align-items-center">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <a href="{{ url('/') }}" class="me-auto brand fs-5 text-decoration-none">SalaDeBelleza</a>
+                @if (Route::has('login'))
                 <nav class="flex items-center justify-end gap-4">
                     @auth
                         <a
@@ -48,10 +82,11 @@
                     @endauth
                 </nav>
             @endif
+                </div>
         </header>
         <div class="flex items-center justify-center w-full transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0">
             <main class="flex max-w-[335px] w-full flex-col-reverse lg:max-w-4xl lg:flex-row">
-                <div class="text-[13px] leading-[20px] flex-1 p-6 pb-12 lg:p-20 bg-white dark:bg-[#161615] dark:text-[#EDEDEC] shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d] rounded-bl-lg rounded-br-lg lg:rounded-tl-lg lg:rounded-br-none">
+            <div class="text-[13px] leading-[20px] flex-1 p-6 pb-12 lg:p-20 bg-white dark:bg-[#161615] dark:text-[#EDEDEC] shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d] rounded-bl-lg rounded-br-lg lg:rounded-tl-lg lg:rounded-br-none">
                     <h1 class="mb-1 font-medium">Let's get started</h1>
                     <p class="mb-2 text-[#706f6c] dark:text-[#A1A09A]">Laravel has an incredibly rich ecosystem. <br>We suggest starting with the following.</p>
                     <ul class="flex flex-col mb-4 lg:mb-6">
@@ -269,6 +304,83 @@
                 </div>
             </main>
         </div>
+
+        {{-- --- Nuevo bloque: Carrusel y sección quiénes somos --- --}}
+        <div class="container mt-4">
+            <div class="hero-carousel position-relative mx-auto" style="max-width:1100px;">
+                <div id="hero" class="position-relative overflow-hidden">
+                    <div class="hero-slide" data-index="0" style="display:block;">
+                        <img src="https://images.unsplash.com/photo-1499336315816-097655dcfbda?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=0f8bf0f7b9a1f0c88e1d64a14e4b5d55" alt="Salon 1">
+                        <div class="carousel-overlay">
+                            <div class="carousel-caption">
+                                <strong>Bienvenido a SalaDeBelleza</strong>
+                                <div class="small text-muted">Belleza premium para ti</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-slide" data-index="1" style="display:none;">
+                        <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=18a1aed16b3d1bf3a7a8e6c7e8f44a57" alt="Salon 2">
+                        <div class="carousel-overlay">
+                            <div class="carousel-caption">
+                                <strong>Servicios exclusivos</strong>
+                                <div class="small text-muted">Tratamientos a medida y atención profesional</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-slide" data-index="2" style="display:none;">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=ab9701b800a8e6ff6e6a4b9f3f5b0f88" alt="Salon 3">
+                        <div class="carousel-overlay">
+                            <div class="carousel-caption">
+                                <strong>Un ambiente relajado</strong>
+                                <div class="small text-muted">Relájate y disfruta de un servicio de calidad</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-dots text-center mt-2">
+                    <button data-slide="0" class="active" aria-label="Slide 1"></button>
+                    <button data-slide="1" aria-label="Slide 2"></button>
+                    <button data-slide="2" aria-label="Slide 3"></button>
+                </div>
+            </div>
+
+            <div class="about-card mt-4 mx-auto" style="max-width:1000px;">
+                <h2 class="mb-2" style="color:var(--dark-1); font-family: 'Harmonis', sans-serif;">Quiénes somos</h2>
+                <p class="mb-0 text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. We are a premium beauty salon focused on delivering the best experience to our clients. Lorem ipsum dolor sit amet, consectetur.</p>
+            </div>
+        </div>
+
+        <script>
+            /* Carousel JS: autoplay 3.5s */
+            (function(){
+                const slides = document.querySelectorAll('#hero .hero-slide');
+                const dots = document.querySelectorAll('.carousel-dots button');
+                let idx = 0;
+                const COUNT = slides.length;
+                const INTERVAL = 3500; // ms
+
+                function show(i){
+                    slides.forEach(s=>s.style.display='none');
+                    dots.forEach(d=>d.classList.remove('active'));
+                    slides[i].style.display='block';
+                    dots[i].classList.add('active');
+                    idx = i;
+                }
+
+                let timer = setInterval(()=>{
+                    const next = (idx + 1) % COUNT;
+                    show(next);
+                }, INTERVAL);
+
+                dots.forEach(btn => btn.addEventListener('click', function(){
+                    const to = Number(this.dataset.slide);
+                    show(to);
+                    clearInterval(timer);
+                    timer = setInterval(()=> show((idx+1)%COUNT), INTERVAL);
+                }));
+            })();
+        </script>
 
         @if (Route::has('login'))
             <div class="h-14.5 hidden lg:block"></div>
